@@ -29,7 +29,7 @@ def startup():
         rain_entries = rainfile.read().split("\n")
 
     # add new entry
-    logging.info("> add new rain trigger at {helpers.datetime_string()}")
+    logging.info(f"> add new rain trigger at {helpers.datetime_string()}")
     rain_entries.append(helpers.datetime_string())
 
     # limit number of entries to 190 - each entry is 21 bytes including
