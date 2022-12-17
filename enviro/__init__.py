@@ -466,8 +466,16 @@ def sleep(time_override=None):
   logging.info(f"  - setting alarm to wake at {hour:02}:{minute:02}{ampm}")
 
   # sleep until next scheduled reading
-  rtc.set_alarm(0, minute, hour)
-  rtc.enable_alarm_interrupt(True)
+
+  # add loggin to check for error
+  try:
+    rtc.set_alarm(0, minute, hour)
+    rtc.enable_alarm_interrupt(True)
+  except Exception as exc:
+    import sys, io
+    buf = io.StringIO()
+    sys.print_exception(exc, buf)
+    logging.debug(f"  - an exception occurred when setting RTC alarm or interrupt.", buf.getvalue())
 
   # disable the vsys hold, causing us to turn off
   logging.info("  - shutting down")
